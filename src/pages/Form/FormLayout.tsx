@@ -35,7 +35,7 @@ const FormLayout = () => {
         author: name,
         title: subject,
         body: message,
-        createdAt: new Date(),
+        createdAt:new Date(),
         fulfilled: false, // Add the "fulfilled" field
       });
 
