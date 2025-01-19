@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { db, auth } from '../../Firebase'; // Assuming firebase.js is set up correctly
+import { db, auth } from '../Firebase'; // Assuming firebase.js is set up correctly
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
 import { ArrowUp } from 'lucide-react';

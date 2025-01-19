@@ -3,7 +3,7 @@ import { db } from '../Firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Loader2, Brain, Target } from 'lucide-react';
-import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
+import Breadcrumb from '../components/Breadcrumb';
 import { 
   RadarChart, 
   PolarGrid, 

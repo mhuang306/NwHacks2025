@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { FaMagic } from 'react-icons/fa';
 import { AiOutlinePlus } from 'react-icons/ai';
-import ChartOne from "../../components/Charts/ChartOne";
-import Leaderboard from "../../components/Tables/TableOne";
+import ChartOne from "../components/board";
+import Leaderboard from "../components/ranking";
 
 const Dashboard = () => {
   const navigate = useNavigate();

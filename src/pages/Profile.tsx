@@ -1,5 +1,5 @@
 import { Edit, Gift, CheckCircle, MessageCircle } from 'lucide-react'; // Import CheckCircle for feedback icon
-import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
+import Breadcrumb from '../components/Breadcrumb';
 import { Link } from 'react-router-dom';
 import { db } from '../Firebase'; // Make sure to import Firebase config
 import { doc, increment, updateDoc, getDoc, collection, addDoc } from 'firebase/firestore';

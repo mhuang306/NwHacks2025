@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
@@ -15,6 +16,19 @@ import Buttons from './pages/UiElements/Buttons';
 import DefaultLayout from './layout/DefaultLayout';
 import NewReq from './pages/newReq';
 import Magic from './pages/magic';
+=======
+import { useEffect, useState } from 'react'; 
+import { Route, Routes, useLocation } from 'react-router-dom'; 
+import Loader from './common/Loader'; 
+import PageTitle from './components/PageTitle'; 
+import Login from './pages/login'; 
+import Home from './pages/Home'; 
+import Profile from './pages/Profile'; 
+import Settings from './pages/Settings'; 
+import DefaultLayout from './layout/DefaultLayout'; 
+import NewReq from './pages/newReq'; 
+import Magic from './pages/magic'; 
+>>>>>>> Stashed changes
 import Landing from './pages/landing';
 
 function App() {

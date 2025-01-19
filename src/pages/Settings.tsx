@@ -1,4 +1,4 @@
-import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
+import Breadcrumb from '../components/Breadcrumb';
 import userThree from '../images/user/daniel.jpg';
 
 const Settings = () => {

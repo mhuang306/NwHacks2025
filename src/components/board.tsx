@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs, query, orderBy, addDoc, updateDoc, doc, getDoc } from 'firebase/firestore';
-import { db, auth } from "../../Firebase";
+import { db, auth } from "../Firebase";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from 'firebase/auth';
 import { HandHeart, Clock, User, CheckCircle } from 'lucide-react';

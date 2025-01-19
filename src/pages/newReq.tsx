@@ -1,3 +1,14 @@
+<<<<<<< Updated upstream
+=======
+import { useState } from 'react';
+import { db } from '../Firebase'; // Firestore setup
+import { collection, addDoc } from 'firebase/firestore';
+import Breadcrumb from '../components/Breadcrumb';
+import toast from 'react-hot-toast';
+import ReactMarkdownEditorLite from 'react-markdown-editor-lite';
+import 'react-markdown-editor-lite/lib/index.css'; // Import CSS for the editor
+import MarkdownIt from 'markdown-it'; // Markdown-it parser
+>>>>>>> Stashed changes
 
 import { useParams } from "react-router-dom";
 import FormElements from "./Form/FormElements";
