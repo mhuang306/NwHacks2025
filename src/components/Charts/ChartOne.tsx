@@ -27,8 +27,8 @@ const ChartOne: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
-      <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <div className="col-span-12 bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
+      <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg">
         <h1 className="text-2xl font-bold mb-6 text-center">Request Board</h1>
         <div className="space-y-4">
           {posts.length > 0 ? (

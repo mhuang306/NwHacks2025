@@ -80,7 +80,7 @@ const Leaderboard = () => {
                 <p className="text-black dark:text-white flex items-center">
                   {key+1}. {user.name}
                 </p>
-                <p className="text-meta-3">{user.rating} hour(s)</p>
+                <p className="text-meta-3">{user.rating} pts</p>
               </div>
             </div>
           ))
