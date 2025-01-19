@@ -38,7 +38,7 @@ function App() {
           index
           element={
             <>
-              <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+              <PageTitle title="PeerUP | Online Peer Tutoring Platform for High Schoolers" />
               <ECommerce />
             </>
           }
