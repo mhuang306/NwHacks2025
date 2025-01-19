@@ -1,56 +1,93 @@
 import { Link } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import SelectGroupOne from '../../components/Forms/SelectGroup/SelectGroupOne';
 import toast from 'react-hot-toast';
-import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { db } from '../../Firebase'; // Firestore setup
+import { collection, addDoc } from 'firebase/firestore';
 
 const FormLayout = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
 
-  const location = useLocation();
-  const { posts, setPosts } = location.state || {};
-  const handleAddPost = () => {
-    if (setPosts) {
-      setPosts((prevPosts: any) => [
-        ...prevPosts,
-        { id: Date.now(), title: "New Post", content: "This is a new post.", author: "User123" },
-      ]);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const { firstName, lastName, email, subject, message } = formData;
+
+    if (!firstName || !lastName || !email || !subject || !message) {
+      toast.error('Please fill out all fields!');
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, 'posts'), {
+        author: `${firstName} ${lastName}`,
+        title: subject,
+        body: message,
+      });
+      toast.success('Request submitted successfully!');
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        subject: '',
+        message: '',
+      });
+    } catch (error) {
+      console.error('Error saving post: ', error);
+      toast.error('Failed to submit request. Please try again.');
     }
   };
+
   return (
     <>
       <Breadcrumb pageName="New Request" />
 
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-1">
         <div className="flex flex-col gap-9">
-          {/* <!-- Contact Form --> */}
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Contact Form
-              </h3>
+              <h3 className="font-medium text-black dark:text-white">Contact Form</h3>
             </div>
-            <form action="#">
+            <form onSubmit={handleSubmit}>
               <div className="p-6.5">
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
-                      First name
+                      First Name
                     </label>
                     <input
                       type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
                       placeholder="Enter your first name"
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
                     />
                   </div>
-
                   <div className="w-full xl:w-1/2">
                     <label className="mb-2.5 block text-black dark:text-white">
-                      Last name
+                      Last Name
                     </label>
                     <input
                       type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
                       placeholder="Enter your last name"
-                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
                     />
                   </div>
                 </div>
@@ -61,8 +98,11 @@ const FormLayout = () => {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="Enter your email address"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
                   />
                 </div>
 
@@ -72,168 +112,39 @@ const FormLayout = () => {
                   </label>
                   <input
                     type="text"
-                    placeholder="Select subject"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    placeholder="Enter the subject"
+                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
                   />
                 </div>
-
-                {/* <SelectGroupOne /> */}
 
                 <div className="mb-6">
                   <label className="mb-2.5 block text-black dark:text-white">
                     Message
                   </label>
                   <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
                     rows={6}
                     placeholder="Type your message"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
                   ></textarea>
                 </div>
 
-                <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90" onClick={handleAddPost}>
+                <button
+                  type="submit"
+                  className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
+                >
                   Submit Request
                 </button>
               </div>
             </form>
           </div>
         </div>
-
-        {/* <div className="flex flex-col gap-9"> */}
-          {/* <!-- Sign In Form --> */}
-          {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"> */}
-            {/* <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Sign In Form
-              </h3>
-            </div>
-            <form action="#">
-              <div className="p-6.5">
-                <div className="mb-4.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="Enter your email address"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  />
-                </div>
-
-                <div>
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    placeholder="Enter password"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  />
-                </div>
-
-                <div className="mt-5 mb-5.5 flex items-center justify-between">
-                  <label htmlFor="formCheckbox" className="flex cursor-pointer">
-                    <div className="relative pt-0.5">
-                      <input
-                        type="checkbox"
-                        id="formCheckbox"
-                        className="taskCheckbox sr-only"
-                      />
-                      <div className="box mr-3 flex h-5 w-5 items-center justify-center rounded border border-stroke dark:border-strokedark">
-                        <span className="text-white opacity-0">
-                          <svg
-                            className="fill-current"
-                            width="10"
-                            height="7"
-                            viewBox="0 0 10 7"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M9.70685 0.292804C9.89455 0.480344 10 0.734667 10 0.999847C10 1.26503 9.89455 1.51935 9.70685 1.70689L4.70059 6.7072C4.51283 6.89468 4.2582 7 3.9927 7C3.72721 7 3.47258 6.89468 3.28482 6.7072L0.281063 3.70701C0.0986771 3.5184 -0.00224342 3.26578 3.785e-05 3.00357C0.00231912 2.74136 0.10762 2.49053 0.29326 2.30511C0.4789 2.11969 0.730026 2.01451 0.992551 2.01224C1.25508 2.00996 1.50799 2.11076 1.69683 2.29293L3.9927 4.58607L8.29108 0.292804C8.47884 0.105322 8.73347 0 8.99896 0C9.26446 0 9.51908 0.105322 9.70685 0.292804Z"
-                              fill=""
-                            />
-                          </svg>
-                        </span>
-                      </div>
-                    </div>
-                    <p>Remember me</p>
-                  </label>
-
-                  <Link to="#" className="text-sm text-primary hover:underline">
-                    Forget password?
-                  </Link>
-                </div> */}
-
-                {/* <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
-                  Sign In
-                </button>
-              </div>
-            </form> */}
-          </div>
-
-          {/* <!-- Sign Up Form --> */}
-          {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Sign Up Form
-              </h3>
-            </div>
-            <form action="#">
-              <div className="p-6.5">
-                <div className="mb-4.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Enter your full name"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  />
-                </div>
-
-                <div className="mb-4.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="Enter your email address"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  />
-                </div>
-
-                <div className="mb-4.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    placeholder="Enter password"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  />
-                </div>
-
-                <div className="mb-5.5">
-                  <label className="mb-2.5 block text-black dark:text-white">
-                    Re-type Password
-                  </label>
-                  <input
-                    type="password"
-                    placeholder="Re-enter password"
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  />
-                </div>
-
-                <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
-                  Sign Up
-                </button>
-              </div> */}
-            {/* </form> */}
-          {/* </div> */}
-        {/* </div> */}
-      {/* </div> */}
+      </div>
     </>
   );
 };

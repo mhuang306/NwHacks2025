@@ -24,7 +24,7 @@ const Leaderboard = () => {
     const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-    setTimeLeft(`${days} days left in semester - Keep studying!`);
+    setTimeLeft(`${days} days left in semester Keep studying!`);
   };
 
   // Fetch users data from Firestore when the component mounts

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { db } from '../../firebase'; // Assuming firebase.js is set up correctly
+import { db } from '../../Firebase'; // Assuming firebase.js is set up correctly
 import { doc, getDoc } from 'firebase/firestore';
 import ClickOutside from '../ClickOutside';
 
