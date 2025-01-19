@@ -1,9 +1,15 @@
-import { Link } from 'react-router-dom';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import toast from 'react-hot-toast';
 import { useState } from 'react';
 import { db } from '../../Firebase'; // Firestore setup
 import { collection, addDoc } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
+import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
+import toast from 'react-hot-toast';
+import ReactMarkdownEditorLite from 'react-markdown-editor-lite';
+import 'react-markdown-editor-lite/lib/index.css'; // Import CSS for the editor
+import MarkdownIt from 'markdown-it'; // Markdown-it parser
+
+// Initialize the markdown-it parser
+const mdParser = new MarkdownIt();
 
 const FormLayout = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +23,14 @@ const FormLayout = () => {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+
+  // Update the message value with markdown input
+  const handleEditorChange = ({ text }: { text: string }) => {
+    setFormData((prev) => ({
+      ...prev,
+      message: text,
     }));
   };
 
@@ -34,8 +48,8 @@ const FormLayout = () => {
       await addDoc(collection(db, 'posts'), {
         author: name,
         title: subject,
-        body: message,
-        createdAt:new Date(),
+        body: message, // Store the markdown text
+        createdAt: new Date(),
         fulfilled: false, // Add the "fulfilled" field
       });
 
@@ -91,16 +105,14 @@ const FormLayout = () => {
 
                 <div className="mb-6">
                   <label className="mb-2.5 block text-black dark:text-white">
-                    Message
+                    Message (Markdown)
                   </label>
-                  <textarea
-                    name="message"
+                  <ReactMarkdownEditorLite
                     value={formData.message}
-                    onChange={handleChange}
-                    rows={6}
-                    placeholder="Provide detailed information about your request. Include specifics, relevant contact details, and your availability."
-                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
-                  ></textarea>
+                    onChange={handleEditorChange}
+                    style={{ height: '300px' }} // Set the editor height
+                    renderHTML={(text) => mdParser.render(text)} // Render the markdown as HTML
+                  />
                 </div>
 
                 <button

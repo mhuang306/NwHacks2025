@@ -1,6 +1,7 @@
 // firebase.js
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth'; // Import Firebase Auth
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -10,7 +11,7 @@ const firebaseConfig = {
   storageBucket: "nwhacks-c583c.firebasestorage.app",
   messagingSenderId: "827959298749",
   appId: "1:827959298749:web:49a201a4151b503e4085d4",
-  measurementId: "G-YC72JQQQJW"
+  measurementId: "G-YC72JQQQJW",
 };
 
 // Initialize Firebase
@@ -19,4 +20,7 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firestore
 const db = getFirestore(app);
 
-export { db };
+// Initialize Firebase Auth
+const auth = getAuth(app);
+
+export { db, auth };

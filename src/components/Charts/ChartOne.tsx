@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
-import { db } from "../../Firebase";
+import { collection, getDocs, query, orderBy, addDoc } from 'firebase/firestore';
+import { db, auth } from "../../Firebase"; // Importing auth from Firebase
 import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged } from 'firebase/auth'; // Importing onAuthStateChanged to track the current logged-in user
 
 const ChartOne = () => {
   const [posts, setPosts] = useState<any[]>([]);
+  const [currentUser, setCurrentUser] = useState<any>(null); // State to hold the current user
   const navigate = useNavigate();
 
+  // Fetch posts on mount
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // Create a query with orderBy
         const postsQuery = query(
           collection(db, "posts"),
           orderBy("createdAt", "desc")
@@ -20,7 +22,6 @@ const ChartOne = () => {
         const postsData = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
-          // Convert Firestore Timestamp to JS Date for easier formatting
           createdAt: doc.data().createdAt?.toDate(),
         }));
         setPosts(postsData);
@@ -30,9 +31,46 @@ const ChartOne = () => {
     };
 
     fetchPosts();
+
+    // Listen for auth state changes (i.e., login/logout events)
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Set the current user when logged in
+        setCurrentUser(user);
+      } else {
+        // If the user is logged out, clear the currentUser state
+        setCurrentUser(null);
+      }
+    });
+
+    // Cleanup the listener on component unmount
+    return () => unsubscribe();
   }, []);
 
-  // Format the date
+  // Handle fulfillment and creating a notification
+  const handleFulfill = async (post: any) => {
+    if (!currentUser) {
+      console.error("No user is logged in!");
+      return;
+    }
+
+    try {
+      // Create notification with the current user's name
+      await addDoc(collection(db, 'notifications'), {
+        recipient: post.author,
+        posttitle: post.title,
+        author: currentUser.displayName || currentUser.email, // Using displayName or email if name is not available
+        createdAt: new Date() // Optional: add timestamp
+      });
+
+      console.log('Notification created successfully');
+      // Optionally update the UI to show the post is fulfilled
+    } catch (error) {
+      console.error('Error creating notification:', error);
+    }
+  };
+
+  // Format date function (same as before)
   const formatDate = (date: Date) => {
     if (!date) return '';
     
@@ -81,10 +119,12 @@ const ChartOne = () => {
                   </div>
                 </div>
                 <button 
-                  className="h-auto px-3 bg-green-100 hover:bg-green-200 text-green-700 rounded-lg flex items-center justify-center transition-colors duration-200"
+                  className={`h-auto px-3 ${post.fulfilled ? 'bg-gray-300 text-gray-600' : 'bg-green-100 hover:bg-green-200 text-green-700'} rounded-lg flex items-center justify-center transition-colors duration-200`}
                   aria-label="Mark as fulfilled"
+                  onClick={() => handleFulfill(post)}
+                  disabled={post.fulfilled}  // Disable if fulfilled
                 >
-                  <svg 
+                                    <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     width="20" 
                     height="20" 

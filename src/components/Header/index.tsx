@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom';
-import DropdownMessage from './DropdownMessage';
 import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
-import LogoIcon from '../../images/logo/logo-icon.svg';
-import DarkModeSwitcher from './DarkModeSwitcher';
+import LogoIcon from '../../images/logo/logo.png';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -56,17 +54,26 @@ const Header = (props: {
           </button>
           {/* <!-- Hamburger Toggle BTN --> */}
 
-          <Link className="block flex-shrink-0 lg:hidden" to="/">
-            <img src={LogoIcon} alt="Logo" />
+          <Link className="block flex-shrink-0 lg:hidden" to="/home">
+            <img
+              src={LogoIcon}
+              alt="Logo"
+              className="max-w-full h-auto" // Apply responsive styles here
+            />
           </Link>
         </div>
 
         {/* Logo and Name - PeerUP */}
         <div className="flex items-center gap-2 sm:gap-4">
-          <Link className="flex items-center" to="/">
-            <img src={LogoIcon} alt="Logo" className="w-8 h-8 mr-2" />
-            <span className="text-xl font-semibold text-black dark:text-white">PeerUP</span>
-          </Link>
+        <Link className="flex items-center" to="/home">
+  <img
+    src={LogoIcon}
+    alt="Logo"
+    className="max-w-[160px] h-auto object-contain" // Ensures the image scales and maintains aspect ratio
+  />
+</Link>
+
+          <span> |  We Care. We Pair.</span>
         </div>
 
         <div className="flex items-center gap-3 2xsm:gap-7">
