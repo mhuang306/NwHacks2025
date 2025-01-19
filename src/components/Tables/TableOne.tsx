@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db, auth } from '../../Firebase'; // Assuming firebase.js is set up correctly
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
+import { ArrowUp } from 'lucide-react';
 
 const Leaderboard = () => {
   const [users, setUsers] = useState<any[]>([]);
@@ -76,9 +77,24 @@ const Leaderboard = () => {
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <h4 className="mb-3 text-xl font-semibold text-black dark:text-white">
-        Leaderboard
-      </h4>
+      {/* Tutor of the Month Section */}
+      <div className="bg-yellow-100 p-4 rounded-lg mb-6">
+        <h5 className="text-lg font-semibold text-black dark:text-white">🎉 Tutor of the Month 🎉</h5>
+        <div className="flex items-center gap-4 mt-3">
+          <img
+            src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/c58889f5-76f9-4e82-9059-648ab7f986da/dftg6nc-e2e604f9-2f67-4fd6-a024-c6e75f18a99d.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2M1ODg4OWY1LTc2ZjktNGU4Mi05MDU5LTY0OGFiN2Y5ODZkYVwvZGZ0ZzZuYy1lMmU2MDRmOS0yZjY3LTRmZDYtYTAyNC1jNmU3NWYxOGE5OWQuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Rz9CCM4cMuaBxZAa7ko3LmKtX8Uczi3Z3kvDgVfsJWk"
+            alt="Tutor of the Month"
+            className="w-12 h-12 rounded-full"
+          />
+          <div className="flex flex-col">
+            <p className="font-semibold text-black dark:text-white flex flex-row"><span><ArrowUp size={20} className='text-green-400 pt-1'/></span><span className='text-green-400 mr-2'>70</span>Daniel Zhang  </p>
+            <p className="text-sm text-gray-700 dark:text-gray-300">For outstanding dedication and patience in math!</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Leaderboard Section */}
+      <h4 className="mb-3 text-xl font-semibold text-black dark:text-white">Leaderboard</h4>
 
       {/* Display the countdown timer */}
       <p className="mb-6 text-md font-light text-black dark:text-white">{timeLeft}</p>

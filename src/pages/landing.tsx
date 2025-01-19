@@ -65,7 +65,7 @@ const LandingPage = () => {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="text-xl text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed"
           >
-            Exchange your knowledge with fellow high school students. Teach what you're great at,
+            Exchange your knowledge with fellow students. Teach what you're great at,
             and get help with subjects you want to improve.
           </motion.p>
           <motion.div

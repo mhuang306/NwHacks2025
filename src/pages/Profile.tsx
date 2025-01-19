@@ -1,4 +1,4 @@
-import { Edit, Gift, CheckCircle } from 'lucide-react'; // Import CheckCircle for feedback icon
+import { Edit, Gift, CheckCircle, MessageCircle } from 'lucide-react'; // Import CheckCircle for feedback icon
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import { Link } from 'react-router-dom';
 import { db } from '../Firebase'; // Make sure to import Firebase config
@@ -79,6 +79,8 @@ const Profile = () => {
                 UBC CS | 3rd Year
               </p>
               {/* Gift icon to add points with feedback */}
+
+              <div className='flex flex-row gap-4'>
               <button
                 onClick={addPoints}
                 className={`mt-4 flex items-center space-x-2 cursor-pointer ${hasCommended ? 'text-gray-500' : 'text-emerald-600'}`}
@@ -91,6 +93,14 @@ const Profile = () => {
                 )}
                 <span>{hasCommended ? 'Boosted' : 'Boost'}</span>
               </button>
+              <button
+                className={`mt-4 flex items-center space-x-2 cursor-pointer text-emerald-600`}
+              >
+                <MessageCircle size={20} />
+                <span>Message</span>
+              </button>
+              </div>
+              
             </div>
           </div>
         </div>
@@ -137,7 +147,7 @@ const Profile = () => {
               <div className="flex items-center justify-between rounded-lg bg-gray-50 p-4">
                 <div className="space-y-1">
                   <p className="font-medium text-gray-900">Intro to Algorithms</p>
-                  <p className="text-sm text-gray-600">with Mog Jhor</p>
+                  <p className="text-sm text-gray-600">with Chloe Chu</p>
                 </div>
                 <span className="text-sm text-gray-500">1 week ago</span>
               </div>

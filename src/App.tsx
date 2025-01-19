@@ -38,7 +38,7 @@ function App() {
           path="/home"
           element={
             <>
-              <PageTitle title="PeerUP | Online Peer Tutoring Platform for High Schoolers" />
+              <PageTitle title="PeerUP | Online Peer Tutoring Platform" />
               <ECommerce />
             </>
           }

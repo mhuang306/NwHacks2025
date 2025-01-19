@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
 import LogoIcon from '../../images/logo/logo.png';
+import DropdownMessage from './DropdownMessage';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -30,6 +31,7 @@ const Header = (props: {
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">
             {/* Notification Menu Area */}
+            <DropdownMessage />
             <DropdownNotification />
           </ul>
 
