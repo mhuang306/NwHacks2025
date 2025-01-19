@@ -1,16 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, orderBy, addDoc } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, addDoc, updateDoc, doc, getDoc } from 'firebase/firestore';
 import { db, auth } from "../../Firebase";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged } from 'firebase/auth';
-import { HandHeart, Clock, User } from 'lucide-react';
+import { HandHeart, Clock, User, CheckCircle } from 'lucide-react';
 
 const ChartOne = () => {
   const [posts, setPosts] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [uid, setUid] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null); // State for the toast
   const navigate = useNavigate();
 
-  // Existing useEffect and fetch logic remains the same...
+  // Fetch current user from Firestore
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const user = auth.currentUser; // Use Firebase Auth to get the current logged-in user
+        if (user) {
+          setUid(user.uid); // Set the current user's UID
+          
+          // Fetch the user document from Firestore
+          const userDocRef = doc(db, 'users', user.uid);
+          const userDoc = await getDoc(userDocRef);
+          
+          if (userDoc.exists()) {
+            setCurrentUser(userDoc.data());
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchUser();
+  }, []); // Empty dependency array to run once on mount
+
+  // Fetch posts
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -32,18 +58,37 @@ const ChartOne = () => {
     };
 
     fetchPosts();
-
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setCurrentUser(user);
-      } else {
-        setCurrentUser(null);
-      }
-    });
-
-    return () => unsubscribe();
   }, []);
 
+  // Handle marking the post as fulfilled (complete)
+  const handleMarkAsComplete = async (postId) => {
+    if (!currentUser) {
+      console.error("No user is logged in!");
+      return;
+    }
+
+    try {
+      const postRef = doc(db, "posts", postId);
+      await updateDoc(postRef, { fulfilled: true });
+
+      // Move completed post to bottom of the list
+      setPosts(prevPosts => {
+        const updatedPosts = prevPosts.filter(post => post.id !== postId);
+        const completedPost = prevPosts.find(post => post.id === postId);
+        if (completedPost) {
+          completedPost.fulfilled = true;
+          updatedPosts.push(completedPost);
+        }
+        return updatedPosts;
+      });
+
+      console.log('Post marked as complete');
+    } catch (error) {
+      console.error('Error marking post as complete:', error);
+    }
+  };
+
+  // Handle sending notification if user can fulfill a request
   const handleFulfill = async (post) => {
     if (!currentUser) {
       console.error("No user is logged in!");
@@ -53,10 +98,18 @@ const ChartOne = () => {
     try {
       await addDoc(collection(db, 'notifications'), {
         recipient: post.author,
-        posttitle: `${currentUser.email} is interested in: ${post.title}`,
-        author: currentUser.displayName || currentUser.email,
+        posttitle: `${currentUser.name} is interested in: ${post.title}`,
+        author: currentUser.name || currentUser.email, // Using `name` now
         createdAt: new Date()
       });
+
+      // Show toast notification for user feedback
+      setToastMessage(`${post.author} has been notified!`);
+
+      // Remove toast after 3 seconds
+      setTimeout(() => {
+        setToastMessage(null);
+      }, 2500);
 
       console.log('Notification created successfully');
     } catch (error) {
@@ -64,6 +117,7 @@ const ChartOne = () => {
     }
   };
 
+  // Format the date for display (e.g., 2 days ago)
   const formatDate = (date) => {
     if (!date) return '';
     
@@ -95,8 +149,8 @@ const ChartOne = () => {
         <div className="space-y-4">
           {posts.length > 0 ? (
             posts.map((post) => (
-              <div key={post.id} className="group">
-                <div className="flex flex-col border border-gray-200 rounded-lg overflow-hidden transition-all duration-200 hover:border-gray-300 hover:shadow-lg">
+              <div key={post.id} className={`group ${post.fulfilled ? 'bg-gray-200 text-gray-500' : ''}`}>
+                <div className={`flex flex-col border border-gray-200 rounded-lg overflow-hidden transition-all duration-200 hover:border-gray-300 hover:shadow-lg ${post.fulfilled ? 'opacity-50' : ''}`}>
                   {/* Main content */}
                   <div className="p-4">
                     <h2 className="text-lg md:text-xl font-semibold mb-2">{post.title}</h2>
@@ -118,21 +172,37 @@ const ChartOne = () => {
                         </div>
                       </div>
                       
-                      {/* Right side - Help button */}
-                      <button
-                        onClick={() => handleFulfill(post)}
-                        disabled={post.fulfilled}
-                        className={`flex items-center space-x-2 px-4 py-1.5 rounded-full transition-all duration-200 ${
-                          post.fulfilled
-                            ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                            : 'bg-gray-100 text-gray-600 hover:bg-green-100 hover:text-green-600 group-hover:scale-105'
-                        }`}
-                      >
-                        <HandHeart size={16} />
-                        <span className="text-sm font-medium">
-                          {post.fulfilled ? 'Helped' : 'I can help'}
-                        </span>
-                      </button>
+                      {/* Right side - Buttons */}
+                      <div className="flex items-center space-x-4">
+                        {currentUser && currentUser.name === post.author && !post.fulfilled && (
+                          <button
+                            onClick={() => handleMarkAsComplete(post.id)}
+                            className="flex items-center space-x-2 px-4 py-1.5 rounded-full transition-all duration-200 bg-blue-100 text-blue-600 hover:bg-blue-200 hover:text-blue-700"
+                          >
+                            <CheckCircle size={16} />
+                            <span className="text-sm font-medium">Mark as Complete</span>
+                          </button>
+                        )}
+                        {post.fulfilled && (
+                          <button
+                            disabled
+                            className="flex items-center space-x-2 px-4 py-1.5 rounded-full transition-all duration-200 bg-gray-100 text-gray-400 cursor-not-allowed"
+                          >
+                            <CheckCircle size={16} />
+                            <span className="text-sm font-medium">Completed</span>
+                          </button>
+                        )}
+                        {currentUser && currentUser.name !== post.author && !post.fulfilled && (
+                          <button
+                            onClick={() => handleFulfill(post)}
+                            disabled={post.fulfilled}
+                            className={`flex items-center space-x-2 px-4 py-1.5 rounded-full transition-all duration-200 ${post.fulfilled ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-gray-100 text-gray-600 hover:bg-green-100 hover:text-green-600 group-hover:scale-105'}`}
+                          >
+                            <HandHeart size={16} />
+                            <span className="text-sm font-medium">{post.fulfilled ? 'Helped' : 'I can help'}</span>
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -143,6 +213,13 @@ const ChartOne = () => {
           )}
         </div>
       </div>
+
+      {/* Toast message */}
+      {toastMessage && (
+        <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-green-200 text-green-800 rounded-lg shadow-lg">
+          <p>{toastMessage}</p>
+        </div>
+      )}
     </div>
   );
 };

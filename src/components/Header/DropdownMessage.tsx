@@ -6,7 +6,7 @@ import usr from '../../images/user/daniel.jpg';
 
 const DropdownMessage = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [notifying, setNotifying] = useState(true);
+  const [notifying, setNotifying] = useState(false);
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">

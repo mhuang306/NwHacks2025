@@ -142,6 +142,7 @@ const DropdownNotification = () => {
                       to="/profile/"
                     >
                       <p className="text-sm">
+                        {notification.author} is interested in:
                         <span className="text-black dark:text-white font-semibold">
                           <span> </span>{notification.posttitle}
                         </span>
