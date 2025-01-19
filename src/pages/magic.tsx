@@ -83,7 +83,7 @@ const Magic = () => {
             value={userDescription}
             onChange={handleUserInputChange}
             placeholder="Tell us about yourself..."
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 min-h-[120px] resize-none"
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 min-h-[120px] resize-none bg-white"
             rows={4}
           />
         </div>
@@ -97,7 +97,7 @@ const Magic = () => {
             value={userGoal}
             onChange={handleUserInputChange}
             placeholder="What are you looking for?"
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 min-h-[120px] resize-none"
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 min-h-[120px] resize-none bg-white"
             rows={4}
           />
         </div>
