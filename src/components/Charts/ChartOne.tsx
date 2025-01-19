@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 const ChartOne: React.FC = () => {
   const [posts, setPosts] = useState([
@@ -15,6 +16,8 @@ const ChartOne: React.FC = () => {
       author: 'User456',
     },
   ]);
+
+  const navigate = useNavigate();
 
   return (
     
@@ -37,7 +40,9 @@ const ChartOne: React.FC = () => {
           className="mt-6 w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
           onClick={() => {
             // Placeholder for adding a new post functionality
-            alert('Add post functionality not implemented');
+            // alert('Add post functionality not implemented');
+  
+            navigate("/newReq", {state: {posts}});
           }}
         >
           Add New Post

@@ -1,13 +1,26 @@
 import { Link } from 'react-router-dom';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import SelectGroupOne from '../../components/Forms/SelectGroup/SelectGroupOne';
+import toast from 'react-hot-toast';
+import { useLocation } from 'react-router-dom';
 
 const FormLayout = () => {
+
+  const location = useLocation();
+  const { posts, setPosts } = location.state || {};
+  const handleAddPost = () => {
+    if (setPosts) {
+      setPosts((prevPosts: any) => [
+        ...prevPosts,
+        { id: Date.now(), title: "New Post", content: "This is a new post.", author: "User123" },
+      ]);
+    }
+  };
   return (
     <>
-      <Breadcrumb pageName="Form Layout" />
+      <Breadcrumb pageName="New Request" />
 
-      <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-9 sm:grid-cols-1">
         <div className="flex flex-col gap-9">
           {/* <!-- Contact Form --> */}
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -64,7 +77,7 @@ const FormLayout = () => {
                   />
                 </div>
 
-                <SelectGroupOne />
+                {/* <SelectGroupOne /> */}
 
                 <div className="mb-6">
                   <label className="mb-2.5 block text-black dark:text-white">
@@ -77,18 +90,18 @@ const FormLayout = () => {
                   ></textarea>
                 </div>
 
-                <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
-                  Send Message
+                <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90" onClick={handleAddPost}>
+                  Submit Request
                 </button>
               </div>
             </form>
           </div>
         </div>
 
-        <div className="flex flex-col gap-9">
+        {/* <div className="flex flex-col gap-9"> */}
           {/* <!-- Sign In Form --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
+          {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"> */}
+            {/* <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
                 Sign In Form
               </h3>
@@ -151,17 +164,17 @@ const FormLayout = () => {
                   <Link to="#" className="text-sm text-primary hover:underline">
                     Forget password?
                   </Link>
-                </div>
+                </div> */}
 
-                <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
+                {/* <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
                   Sign In
                 </button>
               </div>
-            </form>
+            </form> */}
           </div>
 
           {/* <!-- Sign Up Form --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
                 Sign Up Form
@@ -216,11 +229,11 @@ const FormLayout = () => {
                 <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90">
                   Sign Up
                 </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+              </div> */}
+            {/* </form> */}
+          {/* </div> */}
+        {/* </div> */}
+      {/* </div> */}
     </>
   );
 };

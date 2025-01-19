@@ -1,10 +1,24 @@
 import React from 'react';
 import CardDataStats from '../../components/CardDataStats';
 import ChartOne from '../../components/Charts/ChartOne';
-
+import { useState } from 'react';
 import TableOne from '../../components/Tables/TableOne';
 
 const ECommerce: React.FC = () => {
+  const [posts, setPosts] = useState([
+    {
+      id: 1,
+      title: 'First Post',
+      content: 'This is the content of the first post.',
+      author: 'User123',
+    },
+    {
+      id: 2,
+      title: 'Second Post',
+      content: 'Here is some more content for the forum.',
+      author: 'User456',
+    },
+  ]);
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
@@ -103,7 +117,7 @@ const ECommerce: React.FC = () => {
 
       <div className="mt-4 grid grid-cols-11 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
   <div className="col-span-12 xl:col-span-8">
-    <ChartOne />
+    <ChartOne/>
   </div>
   <div className="col-span-12 xl:col-span-3">
     <TableOne />
