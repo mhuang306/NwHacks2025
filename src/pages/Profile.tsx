@@ -1,8 +1,53 @@
-import { Edit } from 'lucide-react';
+import { Edit, Gift, CheckCircle } from 'lucide-react'; // Import CheckCircle for feedback icon
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import { Link } from 'react-router-dom';
+import { db } from '../Firebase'; // Make sure to import Firebase config
+import { doc, increment, updateDoc, getDoc, collection, addDoc } from 'firebase/firestore';
+import { useState, useEffect } from 'react';
 
 const Profile = () => {
+  const [hasCommended, setHasCommended] = useState(false); // State to track commendation status
+  const [kudos, setKudos] = useState(0);
+  // Function to add 10 points to the user's profile
+  const addPoints = async () => {
+    try {
+      const userRef = doc(db, "users", "fJylkhkdZsamtLbmI6fBIctXM7q1"); // Replace with the correct user ID
+      await updateDoc(userRef, {
+        rating: increment(10),
+      });
+
+      await addDoc(collection(db, 'notifications'), {
+        recipient: "Michael Huang",
+        posttitle: "Congrats! Daniel just boosted you with +10 kudos!",
+        author: "danielzhang.936@gmail.com", // Using displayName or email if name is not available
+        createdAt: new Date() // Optional: add timestamp
+      });
+
+      setHasCommended(true); // Set commended state to true
+    } catch (error) {
+      console.error("Error updating points: ", error);
+      alert("Failed to add points. Please try again.");
+    }
+  };
+
+  // Fetch the commendation status from Firestore when the component loads
+  useEffect(() => {
+    const checkCommendedStatus = async () => {
+      try {
+        const userRef = doc(db, "users", "fJylkhkdZsamtLbmI6fBIctXM7q1"); // Replace with actual user ID
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          setKudos(userData.rating);
+        }
+      } catch (error) {
+        console.error("Error fetching user data: ", error);
+      }
+    };
+    
+    checkCommendedStatus();
+  }, []);
+
   return (
     <>
       <Breadcrumb pageName="Profile" />
@@ -33,6 +78,19 @@ const Profile = () => {
               <p className="mt-1 text-lg font-medium text-emerald-600">
                 UBC CS | 3rd Year
               </p>
+              {/* Gift icon to add points with feedback */}
+              <button
+                onClick={addPoints}
+                className={`mt-4 flex items-center space-x-2 cursor-pointer ${hasCommended ? 'text-gray-500' : 'text-emerald-600'}`}
+                disabled={hasCommended} // Disable the button if already commended
+              >
+                {hasCommended ? (
+                  <CheckCircle size={20} /> // Show CheckCircle if already commended
+                ) : (
+                  <Gift size={20} />
+                )}
+                <span>{hasCommended ? 'Boosted' : 'Boost'}</span>
+              </button>
             </div>
           </div>
         </div>
@@ -56,7 +114,7 @@ const Profile = () => {
             </h5>
             <div className="mt-3 flex items-center space-x-6">
               <div className="flex items-center space-x-2">
-                <span className="text-2xl font-bold text-emerald-600">1218</span>
+                <span className="text-2xl font-bold text-emerald-600">{kudos}</span>
                 <span className="text-sm text-gray-500">kudos received</span>
               </div>
               <div className="text-sm font-medium text-emerald-600">

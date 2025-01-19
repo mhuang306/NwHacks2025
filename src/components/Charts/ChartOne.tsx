@@ -58,7 +58,7 @@ const ChartOne = () => {
       // Create notification with the current user's name
       await addDoc(collection(db, 'notifications'), {
         recipient: post.author,
-        posttitle: post.title,
+        posttitle: `${currentUser.email} is interested in: ${post.title}`,
         author: currentUser.displayName || currentUser.email, // Using displayName or email if name is not available
         createdAt: new Date() // Optional: add timestamp
       });

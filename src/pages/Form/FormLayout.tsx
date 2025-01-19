@@ -90,14 +90,14 @@ const FormLayout = () => {
 
                   <div className="w-full">
                     <label className="mb-2.5 block text-black dark:text-white">
-                      Subject
+                      Title
                     </label>
                     <input
                       type="text"
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
-                      placeholder="Enter the subject"
+                      placeholder="Include subject"
                       className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
                     />
                   </div>
