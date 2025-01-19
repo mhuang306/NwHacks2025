@@ -16,6 +16,7 @@ import Tables from './pages/Tables';
 import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import DefaultLayout from './layout/DefaultLayout';
+import NewReq from './pages/newReq';
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -52,6 +53,7 @@ function App() {
             </>
           }
         />
+         <Route path="/newReq" element={<NewReq />} />
         <Route
           path="/profile"
           element={

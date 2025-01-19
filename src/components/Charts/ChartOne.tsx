@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import {db} from "../../Firebase";
+import { useNavigate } from "react-router-dom";
 
 const ChartOne: React.FC = () => {
   const [posts, setPosts] = useState<any[]>([]);
@@ -23,6 +24,8 @@ const ChartOne: React.FC = () => {
     fetchPosts();
   }, []); // Empty dependency array means this runs only once after initial render
 
+  const navigate = useNavigate();
+
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
       <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
@@ -43,6 +46,17 @@ const ChartOne: React.FC = () => {
             <p>No posts available</p>
           )}
         </div>
+        <button
+          className="mt-6 w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+          onClick={() => {
+            // Placeholder for adding a new post functionality
+            // alert('Add post functionality not implemented');
+  
+            navigate("/newReq", {state: {posts}});
+          }}
+        >
+          Add New Post
+        </button>
       </div>
     </div>
   );
