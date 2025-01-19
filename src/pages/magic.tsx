@@ -53,8 +53,8 @@ const Magic = () => {
       const prompt = `
         Be kind and welcoming and accepting in your response, act excited but keep it brief.
         This is a description of myself: "${userDescription}"
-        I am looking for: "${userGoal}"
-        Here are the details of some other posts:
+        My preferences are: "${userGoal}"
+        Here are the details of other people's posts (not mine):
         ${posts.map((post) => `${post.author}: ${post.body}`).join('\n')}
         Match me with the people I am most compatible with. Provide a brief summary of each match and explain why they are a good fit. Keep it brief. Don't use markdown in your response. Make sure user has all necessary context.
       `;
@@ -86,7 +86,7 @@ const Magic = () => {
       <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-lg shadow-md">
         <p className="text-lg text-gray-800">
           Struggling to find a perfect match? Let PeerUP help you connect with the best possible study partners based on your personal description and goals.
-          Share your story, and PeerUP will match you with your ideal study group!
+          Share your story, and we will do the rest!
         </p>
       </div>
 
@@ -106,7 +106,7 @@ const Magic = () => {
           </div>
 
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">Your Goals</label>
+            <label className="block text-sm font-medium text-gray-700">Your Preferences</label>
             <textarea
               name="goal"
               value={userGoal}

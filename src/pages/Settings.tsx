@@ -1,5 +1,5 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
-import userThree from '../images/user/user-03.png';
+import userThree from '../images/user/daniel.jpg';
 
 const Settings = () => {
   return (
@@ -56,8 +56,8 @@ const Settings = () => {
                           type="text"
                           name="fullName"
                           id="fullName"
-                          placeholder="Devid Jhon"
-                          defaultValue="Devid Jhon"
+                          placeholder="Daniel Zhang"
+                          defaultValue="Daniel Zhang"
                         />
                       </div>
                     </div>
@@ -75,7 +75,7 @@ const Settings = () => {
                         name="phoneNumber"
                         id="phoneNumber"
                         placeholder="+990 3343 7865"
-                        defaultValue="+990 3343 7865"
+                        defaultValue="+778 3343 7865"
                       />
                     </div>
                   </div>
@@ -118,29 +118,13 @@ const Settings = () => {
                         type="email"
                         name="emailAddress"
                         id="emailAddress"
-                        placeholder="devidjond45@gmail.com"
-                        defaultValue="devidjond45@gmail.com"
+                        placeholder="danielzhang.936@gmail.com"
+                        defaultValue="danielzhang.936@gmail.com"
                       />
                     </div>
                   </div>
 
-                  <div className="mb-5.5">
-                    <label
-                      className="mb-3 block text-sm font-medium text-black dark:text-white"
-                      htmlFor="Username"
-                    >
-                      Username
-                    </label>
-                    <input
-                      className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                      type="text"
-                      name="Username"
-                      id="Username"
-                      placeholder="devidjhon24"
-                      defaultValue="devidjhon24"
-                    />
-                  </div>
-
+                 
                   <div className="mb-5.5">
                     <label
                       className="mb-3 block text-sm font-medium text-black dark:text-white"
@@ -186,7 +170,7 @@ const Settings = () => {
                         id="bio"
                         rows={6}
                         placeholder="Write your bio here"
-                        defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet."
+                        defaultValue="Grade 11 Student hoping to become a software developer. Favourite quote: 'The pain of regret is far greater than the pain of disclipine.'"
                       ></textarea>
                     </div>
                   </div>
