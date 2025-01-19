@@ -96,13 +96,13 @@ const ChartOne = () => {
   };
 
   return (
-    <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
-      <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg">
+    <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-6 lg:col-span-8 md:col-span-10 w-full">
+      <div className="max-w-full mx-auto bg-white p-6 rounded-lg">
         <h1 className="text-3xl font-bold mb-6 text-center">Active Requests</h1>
         <div className="space-y-4">
           {posts.length > 0 ? (
             posts.map((post) => (
-              <div key={post.id} className="flex gap-4">
+              <div key={post.id} className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                 <div className="flex-grow border border-gray-300 rounded-lg p-4 shadow-sm hover:shadow-md transition">
                   <div className="flex justify-between items-start mb-2">
                     <h2 className="text-xl font-semibold">{post.title}</h2>
@@ -119,12 +119,12 @@ const ChartOne = () => {
                   </div>
                 </div>
                 <button 
-                  className={`h-auto px-3 ${post.fulfilled ? 'bg-gray-300 text-gray-600' : 'bg-green-100 hover:bg-green-200 text-green-700'} rounded-lg flex items-center justify-center transition-colors duration-200`}
+                  className={`h-auto px-4 py-2 text-sm ${post.fulfilled ? 'bg-gray-300 text-gray-600' : 'bg-green-100 hover:bg-green-200 text-green-700'} rounded-lg flex items-center justify-center transition-colors duration-200`}
                   aria-label="Mark as fulfilled"
                   onClick={() => handleFulfill(post)}
                   disabled={post.fulfilled}  // Disable if fulfilled
                 >
-                                    <svg 
+                  <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     width="20" 
                     height="20" 

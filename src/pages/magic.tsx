@@ -52,11 +52,11 @@ const Magic = () => {
 
       const prompt = `
         Be kind and welcoming and accepting in your response, act excited but keep it brief.
-        This is a description of myself: "${userDescription}"
+        "${userDescription}"
         My preferences are: "${userGoal}"
         Here are the details of other people's posts (not mine):
         ${posts.map((post) => `${post.author}: ${post.body}`).join('\n')}
-        Match me with the people I am most compatible with. Provide a brief summary of each match and explain why they are a good fit. Keep it brief. Don't use markdown in your response. Make sure user has all necessary context.
+        Match me with the people I am most compatible with (what I need help with, the other person needs to be good at.). Provide a brief summary of each match and explain why they are a good fit. Keep it brief. Don't use markdown in your response. remember - my weakness must be their strength.
       `;
 
       const result = await model.generateContent(prompt);

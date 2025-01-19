@@ -39,13 +39,7 @@ const LandingPage = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-72 h-72 bg-purple-100/20 rounded-full blur-3xl" />
       </div>
       
-      {/* Floating shapes */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute top-20 right-20 w-8 h-8 border-4 border-emerald-200/30 rounded-full animate-bounce" />
-        <div className="absolute bottom-40 left-20 w-6 h-6 border-4 border-blue-200/30 rotate-45 animate-pulse" />
-        <div className="absolute top-40 right-1/4 w-4 h-4 bg-purple-200/30 rounded-full animate-pulse" />
-      </div>
-      
+
       <main className="flex-grow px-6 py-12 container mx-auto max-w-6xl">
         {/* Hero Section with updated title styling */}
         <section className="text-center mb-16">
