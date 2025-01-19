@@ -3,57 +3,65 @@ import ChartOne from '../../components/Charts/ChartOne';
 import { useState } from 'react';
 import TableOne from '../../components/Tables/TableOne';
 import { useNavigate } from "react-router-dom";
-import { FaMagic } from 'react-icons/fa'; // Import the magic wand icon from FontAwesome
-import { AiOutlinePlus } from 'react-icons/ai'; // Plus icon from react-icons/ai
+import { FaMagic } from 'react-icons/fa';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { Users, Sparkles, Trophy } from 'lucide-react';
 
-const ECommerce: React.FC = () => {
+const Dashboard = () => {
   const navigate = useNavigate();
 
   return (
-    <>
-      {/* Main Layout */}
-      <div className="grid grid-cols-7 gap-4">
-        <div className="col-span-5 flex flex-col gap-4">
-          <ChartOne />
+    <div className="min-h-screen bg-gradient-to-b from-blue-50/50 to-purple-50/50 p-6">
+
+
+      <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">
+        {/* Main Content Area */}
+        <div className="lg:col-span-5 space-y-6">
+
+  <ChartOne />
+
         </div>
 
         {/* Right Side Panel */}
-        <div className="col-span-2 flex flex-col gap-4">
-          {/* Buttons for New Request and Pair with PeerAI */}
-          <div className="bg-white py-6 px-7.5 shadow-default dark:bg-boxdark">
-            <div className="flex w-full gap-4">
-              {/* New Request Button */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Action Buttons */}
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+            <div className="flex flex-col gap-4">
               <button
-                className="flex items-center justify-center w-1/2 h-full gap-2 px-6 py-3 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-                onClick={() => {
-                  navigate("/new");
-                }}
+                onClick={() => navigate("/new")}
+                className="w-full px-6 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
               >
-                <AiOutlinePlus className="text-xl" />
-                New Request
+                <div className="flex items-center justify-center gap-3">
+                  <AiOutlinePlus className="text-xl" />
+                  <span className="font-medium">Start Learning</span>
+                </div>
+                <p className="text-sm text-blue-100 mt-1">Create a new study request</p>
               </button>
 
-              {/* Pair with PeerAI Button */}
               <button
-                className="flex items-center justify-center w-1/2 h-full gap-2 px-6 py-3 bg-gradient-to-r from-purple-300 to-purple-500 text-white rounded-lg shadow-md hover:from-purple-400 hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-75"
-                onClick={() => {
-                  navigate("/magic");
-                }}
+                onClick={() => navigate("/magic")}
+                className="w-full px-6 py-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-opacity-75"
               >
-                <FaMagic className="text-xl" /> {/* Magic Wand Icon from FontAwesome */}
-                PeerAI Match
+                <div className="flex items-center justify-center gap-3">
+                  <FaMagic className="text-xl" />
+                  <span className="font-medium">Smart Match</span>
+                </div>
+                <p className="text-sm text-purple-100 mt-1">Find your perfect study buddy</p>
               </button>
             </div>
           </div>
 
-          {/* Leaderboard (TableOne) */}
-          <TableOne />
-        </div>
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white pointer-events-none" />
+              <TableOne />
+            </div>
+          </div>
       </div>
 
-      <div className="mt-4 grid grid-cols-11 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5"></div>
-    </>
+      {/* Additional spacing for bottom content if needed */}
+      <div className="mt-6" />
+    </div>
   );
 };
 
-export default ECommerce;
+export default Dashboard;

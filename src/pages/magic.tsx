@@ -82,17 +82,17 @@ const Magic = () => {
     <div className="max-w-4xl mx-auto p-6 space-y-8">
       <Breadcrumb pageName="Magic Match!" />
 
-      {/* Introduction Text */}
-      <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg shadow-md">
+      {/* Introduction Section */}
+      <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-lg shadow-md">
         <p className="text-lg text-gray-800">
-          Having trouble pairing up? Let PeerUP help you find the perfect match based on your personal description and goals.
-          Share a bit about yourself and what you're looking for, and PeerUP will match you with your next study group!
+          Struggling to find a perfect match? Let PeerUP help you connect with the best possible study partners based on your personal description and goals.
+          Share your story, and PeerUP will match you with your ideal study group!
         </p>
       </div>
 
-      <div className="space-y-6">
-        {/* Form Layout with Two Fields Side by Side */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Form Section */}
+      <div className="space-y-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">About You</label>
             <textarea
@@ -130,28 +130,22 @@ const Magic = () => {
               Finding Your Best Matches...
             </span>
           ) : (
-            'Match Me!'
+            'Find Matches'
           )}
         </button>
       </div>
 
       {/* Match Results */}
       {matchText && (
-        <div
-          className="bg-white text-gray-900 rounded-lg shadow-lg p-6 space-y-4"
-          style={{
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(240, 240, 240, 0.8))',
-          }}
-        >
-          <h3 className="text-xl font-semibold">Best Matches for You:</h3>
+        <div className="bg-white text-gray-900 rounded-lg shadow-lg p-6 space-y-4">
+          <h3 className="text-xl font-semibold text-gray-800">Your Best Matches:</h3>
           <div
             ref={matchTextRef}
             className={`prose max-w-none ${isStreaming ? 'animate-pulse' : ''}`}
             style={{
               color: '#333',
-              fontWeight: 'normal', // Ensure that the text isn't bold
-              lineHeight: '1.6', // Better readability with increased line height
+              fontWeight: 'normal', // Normal font weight for readability
+              lineHeight: '1.6', // More space between lines for easy reading
             }}
           >
             {matchText}
