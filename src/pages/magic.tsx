@@ -3,6 +3,7 @@ import { db } from '../Firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Loader2 } from 'lucide-react';
+import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 
 const Magic = () => {
   const [userDescription, setUserDescription] = useState('');
@@ -71,6 +72,7 @@ const Magic = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
+      <Breadcrumb pageName="Magic Match!" />
       <div className="space-y-6">
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700">
