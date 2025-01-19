@@ -1,22 +1,3 @@
-<<<<<<< Updated upstream
-import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
-
-import Loader from './common/Loader';
-import PageTitle from './components/PageTitle';
-import Login from './pages/login';
-import Chart from './pages/Chart';
-import ECommerce from './pages/Dashboard/ECommerce';
-import FormElements from './pages/Form/FormElements';
-import FormLayout from './pages/Form/FormLayout';
-import Profile from './pages/Profile';
-import Settings from './pages/Settings';
-import Alerts from './pages/UiElements/Alerts';
-import Buttons from './pages/UiElements/Buttons';
-import DefaultLayout from './layout/DefaultLayout';
-import NewReq from './pages/newReq';
-import Magic from './pages/magic';
-=======
 import { useEffect, useState } from 'react'; 
 import { Route, Routes, useLocation } from 'react-router-dom'; 
 import Loader from './common/Loader'; 
@@ -28,7 +9,6 @@ import Settings from './pages/Settings';
 import DefaultLayout from './layout/DefaultLayout'; 
 import NewReq from './pages/newReq'; 
 import Magic from './pages/magic'; 
->>>>>>> Stashed changes
 import Landing from './pages/landing';
 
 function App() {
@@ -53,7 +33,7 @@ function App() {
           element={
             <>
               <PageTitle title="PeerUP | Online Peer Tutoring Platform for High Schoolers" />
-              <ECommerce />
+              <Home />
             </>
           }
         />
