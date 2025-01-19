@@ -2,8 +2,10 @@ import React from 'react';
 import ChartOne from '../../components/Charts/ChartOne';
 import { useState } from 'react';
 import TableOne from '../../components/Tables/TableOne';
+import { useNavigate } from "react-router-dom";
 
 const ECommerce: React.FC = () => {
+  const navigate = useNavigate();
   const [posts, setPosts] = useState([
     {
       id: 1,
@@ -34,7 +36,15 @@ const ECommerce: React.FC = () => {
             <div className="flex items-center justify-center">
               <button
                 className="flex items-center gap-2 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+                onClick={() => {
+                  // Placeholder for adding a new post functionality
+                  // alert('Add post functionality not implemented');
+        
+                  navigate("/newReq", {state: {posts}});
+                }}
               >
+                
+
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

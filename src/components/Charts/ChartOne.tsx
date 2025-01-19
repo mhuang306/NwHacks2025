@@ -46,17 +46,6 @@ const ChartOne: React.FC = () => {
             <p>No posts available</p>
           )}
         </div>
-        <button
-          className="mt-6 w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
-          onClick={() => {
-            // Placeholder for adding a new post functionality
-            // alert('Add post functionality not implemented');
-  
-            navigate("/newReq", {state: {posts}});
-          }}
-        >
-          Add New Post
-        </button>
       </div>
     </div>
   );
